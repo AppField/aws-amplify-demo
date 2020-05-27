@@ -68,7 +68,7 @@ const Layout: React.FC<LayoutProps> = ({ children, title }) => {
             </IonButtons>
           </StyledToolbar>
         </IonHeader>
-        <IonContent>
+        <IonContent class="ion-padding">
           <StyledDiv>
             <IonHeader collapse="condense">
               <StyledToolbar>
