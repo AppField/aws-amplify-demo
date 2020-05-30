@@ -1,7 +1,9 @@
 import React from 'react';
-import { IonApp } from '@ionic/react';
+import { IonApp, IonRouterOutlet } from '@ionic/react';
+import { IonReactRouter } from '@ionic/react-router';
 
-import Conference from './pages/Conference';
+import ConferencePage from './pages/Conference';
+import AccountPage from './pages/Account';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -25,14 +27,22 @@ import DataProvider from './context/DataContext';
 
 import Amplify from 'aws-amplify';
 import config from './aws-exports';
+
+import { withAuthenticator } from '@aws-amplify/ui-react';
+import { Route } from 'react-router';
 Amplify.configure(config);
 
 const App: React.FC = () => (
   <DataProvider>
     <IonApp>
-      <Conference></Conference>
+      <IonReactRouter>
+        <IonRouterOutlet>
+          <Route path="/" component={ConferencePage} exact />
+          <Route path="/account" component={AccountPage} />
+        </IonRouterOutlet>
+      </IonReactRouter>
     </IonApp>
   </DataProvider>
 );
 
-export default App;
+export default withAuthenticator(App, { usernameAlias: 'email' });

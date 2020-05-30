@@ -82,7 +82,9 @@ const Conference: React.FC = () => {
         <IonCard key={index}>
           <IonCardHeader>
             <IonCardTitle>{talk.name}</IonCardTitle>
-            <IonCardSubtitle>By {talk.speakerName}</IonCardSubtitle>
+            <IonCardSubtitle>
+              By {talk.speakerName}, {talk.speakerBio}
+            </IonCardSubtitle>
           </IonCardHeader>
           <IonCardContent>
             <p>{talk.description}</p>

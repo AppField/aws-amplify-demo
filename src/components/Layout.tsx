@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   IonPage,
   IonHeader,
@@ -10,10 +10,11 @@ import {
   IonButton,
   IonIcon,
   IonPopover,
-} from "@ionic/react";
-import styled from "styled-components";
-import { ellipsisVertical } from "ionicons/icons";
-import MenuPopover from "./MenuPopover";
+  IonBackButton,
+} from '@ionic/react';
+import styled from 'styled-components';
+import { ellipsisVertical } from 'ionicons/icons';
+import MenuPopover from './MenuPopover';
 
 const StyledDiv = styled.div`
   max-width: 1024px;
@@ -21,14 +22,15 @@ const StyledDiv = styled.div`
 `;
 
 const StyledToolbar = styled(IonToolbar)`
-  ${() => isPlatform("ios") && `--background: translucent`}
+  ${() => isPlatform('ios') && `--background: translucent`}
 `;
 
 interface LayoutProps {
   title: string;
+  backButtonDefaultHref?: string;
 }
 
-const Layout: React.FC<LayoutProps> = ({ children, title }) => {
+const Layout: React.FC<LayoutProps> = ({ children, title, backButtonDefaultHref }) => {
   const [showPopover, setShowPopover] = useState<{
     isOpen: boolean;
     event: MouseEvent | undefined;
@@ -45,25 +47,18 @@ const Layout: React.FC<LayoutProps> = ({ children, title }) => {
         translucent={true}
         onDidDismiss={() => setShowPopover({ isOpen: false, event: undefined })}
       >
-        <MenuPopover
-          onClick={() => setShowPopover({ isOpen: false, event: undefined })}
-        />
+        <MenuPopover onClick={() => setShowPopover({ isOpen: false, event: undefined })} />
       </IonPopover>
       <IonPage>
         <IonHeader>
           <StyledToolbar>
+            <IonButtons slot="start">
+              <IonBackButton defaultHref={backButtonDefaultHref} />
+            </IonButtons>
             <IonTitle>{title}</IonTitle>
             <IonButtons slot="end">
-              <IonButton
-                onClick={(event) =>
-                  setShowPopover({ isOpen: true, event: event.nativeEvent })
-                }
-              >
-                <IonIcon
-                  color="primary"
-                  slot="icon-only"
-                  icon={ellipsisVertical}
-                />
+              <IonButton onClick={(event) => setShowPopover({ isOpen: true, event: event.nativeEvent })}>
+                <IonIcon color="primary" slot="icon-only" icon={ellipsisVertical} />
               </IonButton>
             </IonButtons>
           </StyledToolbar>

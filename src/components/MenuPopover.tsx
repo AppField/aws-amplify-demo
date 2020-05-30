@@ -1,6 +1,6 @@
-import React from "react";
-import { IonList, IonItem, IonLabel, IonIcon } from "@ionic/react";
-import { settingsOutline, personOutline } from "ionicons/icons";
+import React from 'react';
+import { IonList, IonItem, IonLabel, IonIcon } from '@ionic/react';
+import { settingsOutline, personOutline } from 'ionicons/icons';
 
 interface MenuPopoverProps {
   onClick: () => any;
@@ -11,6 +11,7 @@ const MenuPopover: React.FC<MenuPopoverProps> = ({ onClick }) => {
     <IonList>
       <IonItem
         button
+        routerLink="/account"
         onClick={() => {
           onClick();
         }}
