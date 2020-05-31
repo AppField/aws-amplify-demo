@@ -91,6 +91,31 @@ export type DeleteTalkInput = {
   id?: string | null,
 };
 
+export type CreateCommentInput = {
+  id?: string | null,
+  message?: string | null,
+  createdBy?: string | null,
+  commentTalkId?: string | null,
+};
+
+export type ModelCommentConditionInput = {
+  message?: ModelStringInput | null,
+  and?: Array< ModelCommentConditionInput | null > | null,
+  or?: Array< ModelCommentConditionInput | null > | null,
+  not?: ModelCommentConditionInput | null,
+};
+
+export type UpdateCommentInput = {
+  id: string,
+  message?: string | null,
+  createdBy?: string | null,
+  commentTalkId?: string | null,
+};
+
+export type DeleteCommentInput = {
+  id?: string | null,
+};
+
 export type ModelTalkFilterInput = {
   id?: ModelIDInput | null,
   clientId?: ModelIDInput | null,
@@ -101,6 +126,15 @@ export type ModelTalkFilterInput = {
   and?: Array< ModelTalkFilterInput | null > | null,
   or?: Array< ModelTalkFilterInput | null > | null,
   not?: ModelTalkFilterInput | null,
+};
+
+export type ModelCommentFilterInput = {
+  id?: ModelIDInput | null,
+  message?: ModelStringInput | null,
+  createdBy?: ModelStringInput | null,
+  and?: Array< ModelCommentFilterInput | null > | null,
+  or?: Array< ModelCommentFilterInput | null > | null,
+  not?: ModelCommentFilterInput | null,
 };
 
 export type CreateTalkMutationVariables = {
@@ -117,6 +151,10 @@ export type CreateTalkMutation = {
     description: string,
     speakerName: string,
     speakerBio: string,
+    comments:  {
+      __typename: "ModelCommentConnection",
+      nextToken: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -136,6 +174,10 @@ export type UpdateTalkMutation = {
     description: string,
     speakerName: string,
     speakerBio: string,
+    comments:  {
+      __typename: "ModelCommentConnection",
+      nextToken: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -155,9 +197,109 @@ export type DeleteTalkMutation = {
     description: string,
     speakerName: string,
     speakerBio: string,
+    comments:  {
+      __typename: "ModelCommentConnection",
+      nextToken: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
+};
+
+export type CreateCommentMutationVariables = {
+  input: CreateCommentInput,
+  condition?: ModelCommentConditionInput | null,
+};
+
+export type CreateCommentMutation = {
+  createComment:  {
+    __typename: "Comment",
+    id: string,
+    message: string | null,
+    createdBy: string | null,
+    talk:  {
+      __typename: "Talk",
+      id: string,
+      clientId: string | null,
+      name: string,
+      description: string,
+      speakerName: string,
+      speakerBio: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateCommentMutationVariables = {
+  input: UpdateCommentInput,
+  condition?: ModelCommentConditionInput | null,
+};
+
+export type UpdateCommentMutation = {
+  updateComment:  {
+    __typename: "Comment",
+    id: string,
+    message: string | null,
+    createdBy: string | null,
+    talk:  {
+      __typename: "Talk",
+      id: string,
+      clientId: string | null,
+      name: string,
+      description: string,
+      speakerName: string,
+      speakerBio: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteCommentMutationVariables = {
+  input: DeleteCommentInput,
+  condition?: ModelCommentConditionInput | null,
+};
+
+export type DeleteCommentMutation = {
+  deleteComment:  {
+    __typename: "Comment",
+    id: string,
+    message: string | null,
+    createdBy: string | null,
+    talk:  {
+      __typename: "Talk",
+      id: string,
+      clientId: string | null,
+      name: string,
+      description: string,
+      speakerName: string,
+      speakerBio: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type GetCoinsQueryVariables = {
+  limit?: number | null,
+  start?: number | null,
+};
+
+export type GetCoinsQuery = {
+  getCoins:  Array< {
+    __typename: "Coin",
+    id: string,
+    name: string,
+    symbol: string,
+    price_usd: string,
+  } | null > | null,
 };
 
 export type GetTalkQueryVariables = {
@@ -173,6 +315,10 @@ export type GetTalkQuery = {
     description: string,
     speakerName: string,
     speakerBio: string,
+    comments:  {
+      __typename: "ModelCommentConnection",
+      nextToken: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -202,6 +348,53 @@ export type ListTalksQuery = {
   } | null,
 };
 
+export type GetCommentQueryVariables = {
+  id: string,
+};
+
+export type GetCommentQuery = {
+  getComment:  {
+    __typename: "Comment",
+    id: string,
+    message: string | null,
+    createdBy: string | null,
+    talk:  {
+      __typename: "Talk",
+      id: string,
+      clientId: string | null,
+      name: string,
+      description: string,
+      speakerName: string,
+      speakerBio: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListCommentsQueryVariables = {
+  filter?: ModelCommentFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListCommentsQuery = {
+  listComments:  {
+    __typename: "ModelCommentConnection",
+    items:  Array< {
+      __typename: "Comment",
+      id: string,
+      message: string | null,
+      createdBy: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null > | null,
+    nextToken: string | null,
+  } | null,
+};
+
 export type OnCreateTalkSubscription = {
   onCreateTalk:  {
     __typename: "Talk",
@@ -211,6 +404,10 @@ export type OnCreateTalkSubscription = {
     description: string,
     speakerName: string,
     speakerBio: string,
+    comments:  {
+      __typename: "ModelCommentConnection",
+      nextToken: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -225,6 +422,10 @@ export type OnUpdateTalkSubscription = {
     description: string,
     speakerName: string,
     speakerBio: string,
+    comments:  {
+      __typename: "ModelCommentConnection",
+      nextToken: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -239,6 +440,88 @@ export type OnDeleteTalkSubscription = {
     description: string,
     speakerName: string,
     speakerBio: string,
+    comments:  {
+      __typename: "ModelCommentConnection",
+      nextToken: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateCommentSubscriptionVariables = {
+  createdBy: string,
+};
+
+export type OnCreateCommentSubscription = {
+  onCreateComment:  {
+    __typename: "Comment",
+    id: string,
+    message: string | null,
+    createdBy: string | null,
+    talk:  {
+      __typename: "Talk",
+      id: string,
+      clientId: string | null,
+      name: string,
+      description: string,
+      speakerName: string,
+      speakerBio: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateCommentSubscriptionVariables = {
+  createdBy: string,
+};
+
+export type OnUpdateCommentSubscription = {
+  onUpdateComment:  {
+    __typename: "Comment",
+    id: string,
+    message: string | null,
+    createdBy: string | null,
+    talk:  {
+      __typename: "Talk",
+      id: string,
+      clientId: string | null,
+      name: string,
+      description: string,
+      speakerName: string,
+      speakerBio: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteCommentSubscriptionVariables = {
+  createdBy: string,
+};
+
+export type OnDeleteCommentSubscription = {
+  onDeleteComment:  {
+    __typename: "Comment",
+    id: string,
+    message: string | null,
+    createdBy: string | null,
+    talk:  {
+      __typename: "Talk",
+      id: string,
+      clientId: string | null,
+      name: string,
+      description: string,
+      speakerName: string,
+      speakerBio: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,

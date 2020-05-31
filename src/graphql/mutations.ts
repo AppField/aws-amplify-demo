@@ -14,6 +14,9 @@ export const createTalk = /* GraphQL */ `
       description
       speakerName
       speakerBio
+      comments {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -31,6 +34,9 @@ export const updateTalk = /* GraphQL */ `
       description
       speakerName
       speakerBio
+      comments {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -48,6 +54,81 @@ export const deleteTalk = /* GraphQL */ `
       description
       speakerName
       speakerBio
+      comments {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createComment = /* GraphQL */ `
+  mutation CreateComment(
+    $input: CreateCommentInput!
+    $condition: ModelCommentConditionInput
+  ) {
+    createComment(input: $input, condition: $condition) {
+      id
+      message
+      createdBy
+      talk {
+        id
+        clientId
+        name
+        description
+        speakerName
+        speakerBio
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateComment = /* GraphQL */ `
+  mutation UpdateComment(
+    $input: UpdateCommentInput!
+    $condition: ModelCommentConditionInput
+  ) {
+    updateComment(input: $input, condition: $condition) {
+      id
+      message
+      createdBy
+      talk {
+        id
+        clientId
+        name
+        description
+        speakerName
+        speakerBio
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteComment = /* GraphQL */ `
+  mutation DeleteComment(
+    $input: DeleteCommentInput!
+    $condition: ModelCommentConditionInput
+  ) {
+    deleteComment(input: $input, condition: $condition) {
+      id
+      message
+      createdBy
+      talk {
+        id
+        clientId
+        name
+        description
+        speakerName
+        speakerBio
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }

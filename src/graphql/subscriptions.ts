@@ -11,6 +11,9 @@ export const onCreateTalk = /* GraphQL */ `
       description
       speakerName
       speakerBio
+      comments {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -25,6 +28,9 @@ export const onUpdateTalk = /* GraphQL */ `
       description
       speakerName
       speakerBio
+      comments {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -39,6 +45,72 @@ export const onDeleteTalk = /* GraphQL */ `
       description
       speakerName
       speakerBio
+      comments {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateComment = /* GraphQL */ `
+  subscription OnCreateComment($createdBy: String!) {
+    onCreateComment(createdBy: $createdBy) {
+      id
+      message
+      createdBy
+      talk {
+        id
+        clientId
+        name
+        description
+        speakerName
+        speakerBio
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateComment = /* GraphQL */ `
+  subscription OnUpdateComment($createdBy: String!) {
+    onUpdateComment(createdBy: $createdBy) {
+      id
+      message
+      createdBy
+      talk {
+        id
+        clientId
+        name
+        description
+        speakerName
+        speakerBio
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteComment = /* GraphQL */ `
+  subscription OnDeleteComment($createdBy: String!) {
+    onDeleteComment(createdBy: $createdBy) {
+      id
+      message
+      createdBy
+      talk {
+        id
+        clientId
+        name
+        description
+        speakerName
+        speakerBio
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
